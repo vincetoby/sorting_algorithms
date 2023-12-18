@@ -29,7 +29,7 @@ void bubble_sort(int *array, size_t size)
 				/*Swap elements if they are in the wrong order*/
 				tmp = array[indx + 1];
 				array[indx + 1] = array[indx];
-				array[j] = tmp;
+				array[indx] = tmp;
 
 				/*Print the array after each swap (for visualization)*/
 				print_array(array, size);
