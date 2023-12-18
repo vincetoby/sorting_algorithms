@@ -1,7 +1,7 @@
 #include "sort.h"
 
 /**
- * bubble_sort - Sorts by swapping largest items to the end of array 
+ * bubble_sort - Sorts by swapping largest items to the end of array
  * @array: Array to sort
  * @size: Size of array
  * Return: void
