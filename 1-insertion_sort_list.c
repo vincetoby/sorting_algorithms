@@ -42,7 +42,7 @@ void insertion_sort_list(listint_t **list)
 				print_list(*list); /* Print the list after the swap */
 			}
 			else
-				/* Break the loop if the current node is not smaller than the previous one */
+				/* Break the loop if the current node is not smaller than the previous*/
 				break;
 		}
 	}
