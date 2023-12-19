@@ -1,74 +1,73 @@
 #include "sort.h"
-#include <stdbool.h>
 
-void swap_node_ahead(listint_t **list, listint_t **tail, listint_t **shaker);
-void swap_node_behind(listint_t **list, listint_t **tail, listint_t **shaker);
+void swap_node_fwd(listint_t **list, listint_t **tail, listint_t **cnode);
+void swap_node_bwd(listint_t **list, listint_t **tail, listint_t **cnode);
 void cocktail_sort_list(listint_t **list);
 
 /**
- * swap_node_ahead - Swap a node in a listint_t doubly-linked list
- * list of integers with the node ahead of it.
- * @list: A pointer to the head of a doubly-linked list of integers.
- * @tail: A pointer to the tail of the doubly-linked list.
- * @shaker: A pointer to the current swapping node of the cocktail shaker algo.
+ * swap_node_fwd - Swap a node in a listint_t doubly-linked list
+ * with the node ahead of it.
+ * @list: A pointer to head of doubly-linked list
+ * @tail: A pointer to the tail of doubly-linked list.
+ * @cnode: A pointer to the current swapping node
  */
 
-void swap_node_ahead(listint_t **list, listint_t **tail, listint_t **shaker)
+void swap_node_fwd(listint_t **list, listint_t **tail, listint_t **cnode)
 {
-	listint_t *tmp = (*shaker)->next;
+	listint_t *tempo = (*cnode)->next;
 
-	if ((*shaker)->prev != NULL)
-		(*shaker)->prev->next = tmp;
+	if ((*cnode)->prev != NULL)
+		(*cnode)->prev->next = tempo;
 	else
-		*list = tmp;
-	tmp->prev = (*shaker)->prev;
-	(*shaker)->next = tmp->next;
-	if (tmp->next != NULL)
-		tmp->next->prev = *shaker;
+		*list = tempo;
+	tempo->prev = (*cnode)->prev;
+	(*cnode)->next = tempo->next;
+	if (tempo->next != NULL)
+		tempo->next->prev = *cnode;
 	else
-		*tail = *shaker;
-	(*shaker)->prev = tmp;
-	tmp->next = *shaker;
-	*shaker = tmp;
+		*tail = *cnode;
+	(*cnode)->prev = tempo;
+	tempo->next = *cnode;
+	*cnode = tempo;
 }
 
 /**
- * swap_node_behind - Swap a node in a listint_t doubly-linked
- * list of integers with the node behind it.
+ * swap_node_bwd - Swap a node in a doubly-linked
+ * with the node behind it.
  * @list: A pointer to the head of a doubly-linked list of integers.
  * @tail: A pointer to the tail of the doubly-linked list.
- * @shaker: A pointer to the current swapping node of the cocktail shaker algo.
+ * @cnode: A pointer to the current swapping node
  */
 
-void swap_node_behind(listint_t **list, listint_t **tail, listint_t **shaker)
+void swap_node_bwd(listint_t **list, listint_t **tail, listint_t **cnode) 
 {
-	listint_t *tmp = (*shaker)->prev;
+	listint_t *tempo = (*cnode)->prev;
 
-	if ((*shaker)->next != NULL)
-		(*shaker)->next->prev = tmp;
+	if ((*cnode)->next != NULL)
+		(*cnode)->next->prev = tmp;
 	else
-		*tail = tmp;
-	tmp->next = (*shaker)->next;
-	(*shaker)->prev = tmp->prev;
-	if (tmp->prev != NULL)
-		tmp->prev->next = *shaker;
+		*tail = tempo;
+	tempo->next = (*cnode)->next;
+	(*cnode)->prev = tempo->prev;
+	if (tempo->prev != NULL)
+		tempo->prev->next = *cnode;
 	else
-		*list = *shaker;
-	(*shaker)->next = tmp;
-	tmp->prev = *shaker;
-	*shaker = tmp;
+		*list = *cnode;
+	(*cnode)->next = tempo;
+	tempo->prev = *cnode;
+	*cnode = tempo;
 }
 
 /**
- * cocktail_sort_list - Sort a listint_t doubly-linked list of integers in
+ * cocktail_sort_list - Sort a doubly-linked list in
  * ascending order using the cocktail shaker algorithm.
- * @list: A pointer to the head of a listint_t doubly-linked list.
+ * @list: A pointer to the head of doubly-linked list.
  */
 
 void cocktail_sort_list(listint_t **list)
 {
-	listint_t *tail, *shaker;
-	bool shaken_not_stirred = false;
+	listint_t *tail, *cnode;
+	bool sns = false;
 
 	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return;
@@ -76,26 +75,26 @@ void cocktail_sort_list(listint_t **list)
 	for (tail = *list; tail->next != NULL;)
 		tail = tail->next;
 
-	while (shaken_not_stirred == false)
+	while (sns == false)
 	{
-		shaken_not_stirred = true;
-		for (shaker = *list; shaker != tail; shaker = shaker->next)
+		sns = true;
+		for (cnode = *list; cnode != tail; cnode = cnode->next)
 		{
-			if (shaker->n > shaker->next->n)
+			if (cnode->n > cnode->next->n)
 			{
-				swap_node_ahead(list, &tail, &shaker);
+				swap_node_fwd(list, &tail, &cnode);
 				print_list((const listint_t *)*list);
-				shaken_not_stirred = false;
+				sns = false;
 			}
 		}
-		for (shaker = shaker->prev; shaker != *list;
-				shaker = shaker->prev)
+		for (cnode = cnode->prev; cnode != *list;
+				cnode = cnode->prev)
 		{
-			if (shaker->n < shaker->prev->n)
+			if (cnode->n < sns->prev->n)
 			{
-				swap_node_behind(list, &tail, &shaker);
+				swap_node_bwd(list, &tail, &cnode);
 				print_list((const listint_t *)*list);
-				shaken_not_stirred = false;
+				sns = false;
 			}
 		}
 	}
