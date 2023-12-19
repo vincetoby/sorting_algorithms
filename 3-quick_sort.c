@@ -18,7 +18,7 @@ void quick_sort_quick(int *array, size_t size, int *_array,
 	if (size > 1)
 	{
 		p = split(array, size, _array, _size);
-		quick_sort_quick(&array[0], part, _array, _size);
+		quick_sort_quick(&array[0], p, _array, _size);
 		quick_sort_quick(&array[p], size - p, _array, _size);
 	}
 }

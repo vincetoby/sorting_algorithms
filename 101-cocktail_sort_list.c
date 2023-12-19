@@ -44,7 +44,7 @@ void swap_node_bwd(listint_t **list, listint_t **tail, listint_t **cnode)
 	listint_t *tempo = (*cnode)->prev;
 
 	if ((*cnode)->next != NULL)
-		(*cnode)->next->prev = tmp;
+		(*cnode)->next->prev = tempo;
 	else
 		*tail = tempo;
 	tempo->next = (*cnode)->next;
@@ -90,7 +90,7 @@ void cocktail_sort_list(listint_t **list)
 		for (cnode = cnode->prev; cnode != *list;
 				cnode = cnode->prev)
 		{
-			if (cnode->n < sns->prev->n)
+			if (cnode->n < cnode->prev->n)
 			{
 				swap_node_bwd(list, &tail, &cnode);
 				print_list((const listint_t *)*list);
