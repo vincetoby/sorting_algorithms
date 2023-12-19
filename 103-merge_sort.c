@@ -40,10 +40,10 @@ void submerge(int *arr, int *buffer, size_t fwd, size_t mid,
 
 /**
  * recursive_merge_sort - Implement the merge sort algorithm through recursion.
- * @subarr: A subarray of an array of integers to sort.
- * @buff: A buffer to store the sorted result.
- * @front: The front index of the subarray.
- * @back: The back index of the subarray.
+ * @arr: A subarray to sort.
+ * @buffer: A buffer to store the sorted result.
+ * @fwd: The first index of the subarray.
+ * @bwd: The last index of the subarray.
  */
 
 void recursive_merge_sort(int *arr, int *buffer, size_t fwd, size_t bwd)

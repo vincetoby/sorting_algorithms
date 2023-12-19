@@ -74,13 +74,13 @@ size_t split(int *array, size_t size, int *_array, size_t _size)
 
 void quick_sort(int *array, size_t size)
 {
-        int *_array;
-        size_t _size;
+	int *_array;
+	size_t _size;
 
-        if (array == NULL)
-                return;
-        _array = &array[0];
-        _size = size;
-        quick_sort_quick(array, size, _array, _size);
+	if (array == NULL)
+		return;
+	_array = &array[0];
+	_size = size;
+	quick_sort_quick(array, size, _array, _size);
 }
 
