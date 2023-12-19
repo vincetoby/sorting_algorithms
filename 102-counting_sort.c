@@ -1,67 +1,67 @@
 #include "sort.h"
-#include <limits.h>
-#include <stdlib.h>
 
 /**
- * get_max - Find max value in array of integers
- *
- * @array: array to find max value of
- * @size: size of the array
- * Return: 0
+ * max_of - Get the maximum value in an array of integers.
+ * @array: An array of integers.
+ * @size: The size of array.
+ * Return: The maximum int in the array.
  */
-int get_max(int *array, size_t size)
+
+int max_of(int *array, int size)
 {
-	int max = INT_MIN;
+	int maxi, i;
 
-	while (size--)
-		if (array[size] > max)
-			max = array[size];
-
-	return (max);
+	for (maxi = array[0], i = 1; i < size; i++)
+	{
+		if (array[i] > maxi)
+			maxi = array[i];
+	}
+	return (maxi);
 }
 
 /**
- * counting_sort - sort an array
- * @array: array to sort
- * @size: size of array to sort
+ * counting_sort - Sort an array of integers in ascending order
+ * using the counting sort algorithm
+ * @array: An array of integers.
+ * @size: The size of array.
+ * Return: void
  */
+
 void counting_sort(int *array, size_t size)
 {
-	int *temp, *cpy, j, max;
-	size_t i;
+	int *counter, *sd, maxi, i;
 
-	if (!array || size < 2)
+	if (array == NULL || size < 2)
 		return;
 
-	max = get_max(array, size);
-	temp = calloc(max + 1, sizeof(*temp));
-	if (!temp)
+	sd = malloc(sizeof(int) * size);
+	if (sd == NULL)
 		return;
-
-	cpy = malloc(sizeof(*cpy) * size);
-	if (!cpy)
+	maxi = max_of(array, size);
+	counter = malloc(sizeof(int) * (maxi + 1));
+	if (counter == NULL)
 	{
-		free(temp);
+		free(sd);
 		return;
 	}
 
-	for (i = 0; i < size; i++)
-		temp[array[i]]++;
+	for (i = 0; i < (maxi + 1); i++)
+		counter[i] = 0;
+	for (i = 0; i < (int)size; i++)
+		counter[array[i]] += 1;
+	for (i = 0; i < (maxi + 1); i++)
+		counter[i] += counter[i - 1];
+	print_array(counter, maxi + 1);
 
-	for (j = 1; j < max + 1; j++)
-		temp[j] += temp[j - 1];
-
-	print_array(temp, max + 1);
-
-	for (i = 0; i < size; i++)
+	for (i = 0; i < (int)size; i++)
 	{
-		temp[array[i]]--;
-		cpy[temp[array[i]]] = array[i];
+		sd[counter[array[i]] - 1] = array[i];
+		counter[array[i]] -= 1;
 	}
 
-	for (i = 0; i < size; i++)
-		array[i] = cpy[i];
+	for (i = 0; i < (int)size; i++)
+		array[i] = sd[i];
 
-	free(temp);
-	free(cpy);
+	free(sd);
+	free(counter);
 }
